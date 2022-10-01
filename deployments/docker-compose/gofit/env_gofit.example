@@ -1,0 +1,13 @@
+# Required for local time to be written to db
+TZ=Europe/Vilnius
+
+# gofit ENV
+INFLUXDB_HOST=http://influxdb-fit:8086
+INFLUXDB_ORG=myorg
+INFLUXDB_BUCKET=fitbit
+INFLUXDB_TOKEN=influxdb_api_token
+FITBIT_CLIENTID=fitbit_clientid
+FITBIT_SECRET=fitbit_secret
+FITBIT_REDIRURL=https://localhost/mybit/callback
+FITBIT_CACHEFILE=.cache/token
+

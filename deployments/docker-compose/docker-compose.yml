@@ -1,0 +1,38 @@
+services:
+  influxdb:
+    image: influxdb:2.1.1
+    container_name: influxdb-fit
+    restart: on-failure
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
+    env_file:
+      - .env
+    volumes:
+      - ./influxdb/data:/var/lib/influxdb2
+      - ./influxdb/config:/etc/influxdb2
+    ports:
+      - 8086:8086
+    networks:
+      - gofit
+
+  grafana:
+    image: grafana/grafana-oss:8.5.0
+    container_name: grafana-fit
+    restart: on-failure
+    depends_on:
+      - influxdb
+    env_file:
+      - .env
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - gofit
+
+networks:
+  gofit:
